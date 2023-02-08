@@ -1,15 +1,20 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
+import Roles from '../../enums/roles.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminGuard implements CanActivate {
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+  roles: Roles | undefined
+  constructor(private _router:Router){}
+  canActivate() {
+    if (this.roles == 1) {
+      return true;
+    } else {
+      this._router.navigate(["/"]);
+      return false;
+    }
   }
-  
 }

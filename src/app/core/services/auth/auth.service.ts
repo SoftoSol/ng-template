@@ -2,6 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import localStorageVar from '../../constants/local-storage-var';
+import { UserInfo } from '../../interfaces/user-info.interface';
 
 
 @Injectable({
@@ -10,6 +11,7 @@ import localStorageVar from '../../constants/local-storage-var';
 export class AuthService implements OnInit {
   public token: BehaviorSubject<string | null>;
   public user: BehaviorSubject<string | null>;
+  users:UserInfo|undefined;
 
   constructor(private router: Router, private _service: AuthService) {
     this.token = new BehaviorSubject(
@@ -24,6 +26,11 @@ export class AuthService implements OnInit {
   }
   ngOnInit(): void {
   }
+
+
+
+isAuthenticated = ():boolean => (this.token.value!='null' && this.token.value!=null)?true:false;
+getUserRole=():string=>this.users?.role.toLocaleLowerCase()||'';
 
 
   logout() {
