@@ -6,6 +6,7 @@ import {
   HttpInterceptor,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import localStorageVar from '../../constants/local-storage-var';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -18,7 +19,7 @@ export class JwtInterceptor implements HttpInterceptor {
     // console.log(request);
     request = request.clone({
       setHeaders: {
-        Authorization: `Bearer ` + localStorage.getItem('token'),
+        Authorization: `Bearer ` + localStorage.getItem(localStorageVar.token),
       },
     });
     return next.handle(request);

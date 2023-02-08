@@ -1,11 +1,8 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import localStorageVar from '../../constants/local-storage-var';
 
-const localStorageVar = {
-  token: 'token',
-  loginInfo: 'info',
-};
 
 @Injectable({
   providedIn: 'root',
