@@ -5,7 +5,7 @@ import {
   HttpInterceptor,
   HttpErrorResponse
 } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 import { Injectable } from '@angular/core';
@@ -25,12 +25,11 @@ export class HeaderInterceptor implements HttpInterceptor {
       if (err instanceof HttpErrorResponse) {
         console.log(err)
         if (err.status === 401) {
-        if (!request.url.toLocaleLowerCase().includes('auth')) {
-          // this.authService.logout();
-         return ;
+          if (!request.url.toLocaleLowerCase().includes("auth")) {
+            // this.authService.logout();
+            return;
+          }
         }
-        }
-
       }
     }));
   }
