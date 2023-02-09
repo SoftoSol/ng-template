@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -13,7 +14,7 @@ export class AuthService implements OnInit {
   public user: BehaviorSubject<string | null>;
   users:UserInfo|undefined;
 
-  constructor(private router: Router, private _service: AuthService) {
+  constructor(private router: Router, private _service: AuthService,private http:HttpClient) {
     this.token = new BehaviorSubject(
       localStorage.getItem(localStorageVar.token) || null
     );
@@ -39,5 +40,14 @@ getUserRole=():string=>this.users?.role.toLocaleLowerCase()||'';
     this.token.next(null);
     this.user.next(null);
     this.router.navigate(['']);
+  }
+
+  async refreshToken(): Promise<any> {
+    let prom = await this.http.post('', { token:localStorage.getItem(localStorageVar.refreshToken) })
+      .toPromise();
+    this.token.next(null);
+    localStorage.setItem(localStorageVar.token,'');
+    localStorage.setItem(localStorageVar.refreshToken, '');
+    return prom;
   }
 }

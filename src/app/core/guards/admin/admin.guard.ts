@@ -10,7 +10,7 @@ export class AdminGuard implements CanActivate {
   roles: Roles | undefined
   constructor(private _router:Router){}
   canActivate() {
-    if (this.roles == 1) {
+    if (this.roles == Roles.Admin) {
       return true;
     } else {
       this._router.navigate(["/"]);
